@@ -4,10 +4,14 @@ import { notFoundError } from '@/errors';
 import { addressRepository, CreateAddressParams, enrollmentRepository, CreateEnrollmentParams } from '@/repositories';
 import { exclude } from '@/utils/prisma-utils';
 
+export type cep = {
+  cep: string;
+}
+
 // TODO - Receber o CEP por parâmetro nesta função.
 async function getAddressFromCEP(cep: string) {
   // FIXME: está com CEP fixo!
-  const result = await request.get(`${process.env.VIA_CEP_API}/37440000/json/`);
+  const result = await request.get(`${process.env.VIA_CEP_API}/${cep}/json/`);
 
   // TODO: Tratar regras de negócio e lanças eventuais erros
 
