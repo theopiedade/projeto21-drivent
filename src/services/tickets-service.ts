@@ -1,5 +1,5 @@
 import { ticketsRepository } from '@/repositories';
-import { TicketType } from '@/protocols';
+import { TicketType, Ticket } from '@/protocols';
 
 async function ticketsTypes(): Promise<TicketType[]> {
   const tickets = await ticketsRepository.findTicketsTypes();
@@ -8,14 +8,14 @@ async function ticketsTypes(): Promise<TicketType[]> {
 }
 
 
-async function ticketsGet(number: id): Promise<TicketType> {
-  const tickets = await ticketsRepository.findTickets(id);
+/*async function ticketsGet(id: number): Promise<Ticket> {
+  const ticket = await ticketsRepository.findTickets(id);
 
-  return tickets;
-}
+  return ticket;
+
+}*/
 
 
 export const ticketsService = {
-    ticketsTypes,
-    ticketsGet
+    ticketsTypes
 };
