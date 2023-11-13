@@ -8,6 +8,14 @@ async function ticketsTypes(): Promise<TicketType[]> {
 }
 
 
+async function ticketsGet(number: id): Promise<TicketType> {
+  const tickets = await ticketsRepository.findTickets(id);
+
+  return tickets;
+}
+
+
 export const ticketsService = {
-    ticketsTypes
+    ticketsTypes,
+    ticketsGet
 };
