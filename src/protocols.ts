@@ -19,6 +19,17 @@ export type AddressEnrollment = {
   uf: string;
 };
 
+export type TicketType = {
+    id: number,
+    name: string,
+    price: number,
+    isRemote: boolean,
+    includesHotel: boolean,
+    createdAt: Date,
+    updatedAt: Date,
+};
+
+
 export type CEP = {
   cep: string;
 };
