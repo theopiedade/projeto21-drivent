@@ -3,8 +3,9 @@ import 'express-async-errors';
 import express, { Express } from 'express';
 import cors from 'cors';
 import { handleApplicationErrors } from '@/middlewares';
-import { usersRouter, authenticationRouter, eventsRouter, enrollmentsRouter } from '@/routers';
+import { ticketsRouter, usersRouter, authenticationRouter, eventsRouter, enrollmentsRouter } from '@/routers';
 import { loadEnv, connectDb, disconnectDB } from '@/config';
+
 
 loadEnv();
 
@@ -14,6 +15,7 @@ app
   .use(express.json())
   .get('/health', (_req, res) => res.send('OK!'))
   .use('/users', usersRouter)
+  .use('/tickets', ticketsRouter)
   .use('/auth', authenticationRouter)
   .use('/event', eventsRouter)
   .use('/enrollments', enrollmentsRouter)
