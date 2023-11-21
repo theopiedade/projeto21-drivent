@@ -6,7 +6,7 @@ import { hotelsRepository } from "@/repositories"
 async function getHotels(userId: number) {
     
     const enrollmentsCheck = await enrollmentsService.getOneWithAddressByUserId(userId)
-    if (!enrollmentsCheck || enrollmentsCheck.name == 'NotFoundError') throw notFoundError()
+    if (enrollmentsCheck.name == 'NotFoundError') throw notFoundError()
 
     const ticketPayedCheck = await ticketsService.getTicketByUserId(userId)
     if (ticketPayedCheck.status != 'PAID') throw paymentRequiredError();
