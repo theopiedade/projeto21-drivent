@@ -7,6 +7,14 @@ async function findTicketTypes(): Promise<TicketType[]> {
     return result
 }
 
+async function findTicketTypeById(id: number): Promise<TicketType> {
+  const result = await prisma.ticketType.findUnique({
+    where: { id }
+})
+  return result
+}
+
+
 async function findTicketByEnrollmentId(enrollmentId: number): Promise<Ticket> {
     const result = await prisma.ticket.findUnique({
         where: { enrollmentId },
@@ -51,4 +59,5 @@ export const ticketsRepository = {
     createTicket,
     findTicketById,
     ticketProcessPayment,
+    findTicketTypeById
 }
