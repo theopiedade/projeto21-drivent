@@ -30,6 +30,9 @@ async function postBooking(roomId: number, userId: number) {
   const room = await hotelRepository.findRoomsById(roomId);
   if (!room) throw notFoundError();
 
+  const roomsReserved = await hotelRepository.findManyRoomsById(room.id);
+  if (roomsReserved.length === room.capacity) throw forbiddenError();
+
   const enrollments = await enrollmentRepository.findWithAddressByUserId(userId);
   if (!enrollments) throw notFoundError(); 
 
@@ -39,8 +42,6 @@ async function postBooking(roomId: number, userId: number) {
   const ticketType = await ticketsRepository.findTicketTypesById(tickets.ticketTypeId);
   if (ticketType.isRemote || !ticketType.includesHotel) throw forbiddenError();
 
-  const roomsReserved = await hotelRepository.findManyRoomsById(room.id);
-  if (roomsReserved.length === room.capacity) throw forbiddenError();
 
   const bookingData: CreateBookingParams = {
     userId,
@@ -51,7 +52,24 @@ async function postBooking(roomId: number, userId: number) {
   return booking
 }
 
+async function changeBooking(roomId: number, userId: number) {
+  const room = await hotelRepository.findRoomsById(roomId);
+  if (!room) throw notFoundError();
+
+  const userHasBooking = await bookingRepository.findBooking(userId)
+  if (!userHasBooking) throw forbiddenError();
+
+  const roomsReserved = await hotelRepository.findManyRoomsById(room.id);
+  if (roomsReserved.length === room.capacity) throw forbiddenError();
+
+
+  const booking = await bookingRepository.changeBooking(userId, roomId)
+  return booking
+
+}
+
   export const bookingService = {
     getBooking,
-    postBooking
+    postBooking, 
+    changeBooking
   };
