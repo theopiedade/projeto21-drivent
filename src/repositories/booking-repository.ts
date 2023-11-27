@@ -1,12 +1,13 @@
 import { prisma } from '@/config';
 
 async function findBooking(userId: number) {
-  return prisma.hotel.findUnique({
+  return prisma.booking.findUnique({
     where: {
-        id: userId,
+        userId: userId,
       }
     });
 }
+
 
 export const bookingRepository = {
   findBooking
